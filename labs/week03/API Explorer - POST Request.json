@@ -1,0 +1,157 @@
+{
+  "name": "API Explorer - POST Request",
+  "nodes": [
+    {
+      "parameters": {},
+      "type": "n8n-nodes-base.manualTrigger",
+      "typeVersion": 1,
+      "position": [
+        0,
+        0
+      ],
+      "id": "9c2dcfde-3c3a-453d-8fb1-6cee19c04532",
+      "name": "When clicking ‘Execute workflow’"
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "6a5f01a1-8ac9-4392-8bd8-133173ba71c0",
+              "name": "Title",
+              "value": "My Automation Journey",
+              "type": "string"
+            },
+            {
+              "id": "88db0a3f-d5e2-467e-a1ec-04b4aca2336e",
+              "name": "Body",
+              "value": "Learning to build workflows with n8n in CIS 91",
+              "type": "string"
+            },
+            {
+              "id": "2703fbf3-5ae2-4815-a2f3-53ddceb81125",
+              "name": "userId",
+              "value": 1,
+              "type": "number"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.5,
+      "position": [
+        224,
+        0
+      ],
+      "id": "34a5d839-ca2a-4d0a-b6b9-a86bd0de8b28",
+      "name": "Edit Fields"
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "https://jsonplaceholder.typicode.com/posts",
+        "sendBody": true,
+        "bodyParameters": {
+          "parameters": [
+            {
+              "name": "=json { \"title\": \"\"{{ $json.Title }}, \"body\": \"{{ $json.Body }}\", \"userId\": {{ $json.userId }} }"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.5,
+      "position": [
+        448,
+        0
+      ],
+      "id": "cfe3f9c8-9692-4b6c-98b8-b54a7d638808",
+      "name": "HTTP Request"
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "b062ee25-57cd-4796-bbe6-8632e65179d9",
+              "name": "created_id",
+              "value": "={{ $json.id }}",
+              "type": "string"
+            },
+            {
+              "id": "15e0f849-540d-4b07-891c-27422035671e",
+              "name": "title",
+              "value": "=My Automation Journey",
+              "type": "string"
+            },
+            {
+              "id": "bbf11aca-8fc4-4994-ab28-329cd7010474",
+              "name": "success",
+              "value": "={{ $json.id ? true : false }}",
+              "type": "boolean"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.5,
+      "position": [
+        672,
+        0
+      ],
+      "id": "5b53bd6b-c4e4-4090-8359-2edd7297d481",
+      "name": "Edit Fields1"
+    }
+  ],
+  "pinData": {},
+  "connections": {
+    "When clicking ‘Execute workflow’": {
+      "main": [
+        [
+          {
+            "node": "Edit Fields",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Edit Fields": {
+      "main": [
+        [
+          {
+            "node": "HTTP Request",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "HTTP Request": {
+      "main": [
+        [
+          {
+            "node": "Edit Fields1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "active": false,
+  "settings": {
+    "executionOrder": "v1",
+    "binaryMode": "separate"
+  },
+  "versionId": "718d828f-1e0a-4a88-b78b-3e5c20220b2c",
+  "meta": {
+    "instanceId": "74ee99bc740c6dac711ced63f616b978808d56ad1bdf9d964ab20472df081c38"
+  },
+  "nodeGroups": [],
+  "id": "uLwkDCDMaBnSS1zp",
+  "tags": []
+}

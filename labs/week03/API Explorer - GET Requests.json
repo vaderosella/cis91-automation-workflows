@@ -1,0 +1,268 @@
+{
+  "name": "API Explorer - GET Requests",
+  "nodes": [
+    {
+      "parameters": {},
+      "type": "n8n-nodes-base.manualTrigger",
+      "typeVersion": 1,
+      "position": [
+        0,
+        0
+      ],
+      "id": "9388faf7-4ab9-446c-9c78-7625e3db8bb6",
+      "name": "When clicking ‘Execute workflow’"
+    },
+    {
+      "parameters": {
+        "url": "https://wttr.in/Palm+Desert?format=j1",
+        "options": {
+          "response": {
+            "response": {
+              "responseFormat": "json"
+            }
+          }
+        }
+      },
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.5,
+      "position": [
+        224,
+        0
+      ],
+      "id": "6838362c-d218-480f-a346-5178cf757016",
+      "name": "HTTP Request"
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "5f9124e2-4797-4a32-9bad-04fcc8742bb0",
+              "name": "location",
+              "value": "={{ $json.nearest_area[0].areaName[0].value }}",
+              "type": "string"
+            },
+            {
+              "id": "7c6f65e6-c147-4f2b-acd8-f5dd1e22147a",
+              "name": "temp_f",
+              "value": "={{ $json.current_condition[0].temp_F }}",
+              "type": "number"
+            },
+            {
+              "id": "115d33b9-fdf2-438e-b429-cfa7aea532a9",
+              "name": "description",
+              "value": "={{ $json.current_condition[0].weatherDesc[0].value }}",
+              "type": "string"
+            },
+            {
+              "id": "4617fd5f-03de-4aea-a398-156bcf2a7121",
+              "name": "humidity",
+              "value": "={{ $json.current_condition[0].humidity }}",
+              "type": "number"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.5,
+      "position": [
+        448,
+        0
+      ],
+      "id": "0b7d1b8e-e7ed-4351-a54c-35fe77f8ba22",
+      "name": "Edit Fields"
+    },
+    {
+      "parameters": {
+        "url": "https://randomuser.me/api/",
+        "options": {
+          "response": {
+            "response": {
+              "responseFormat": "json"
+            }
+          }
+        }
+      },
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.5,
+      "position": [
+        672,
+        16
+      ],
+      "id": "8af112b5-2df8-4e4b-9776-8e11b65f1475",
+      "name": "HTTP Request1"
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "8ed75b22-1440-4f65-8b47-6182d8ad7dd7",
+              "name": "full_name",
+              "value": "={{ $json.results[0].name.first + \" \" + $json.results[0].name.last }}",
+              "type": "string"
+            },
+            {
+              "id": "4762381a-937d-427b-8922-c57f2f28fbf3",
+              "name": "email",
+              "value": "={{ $json.results[0].email }}",
+              "type": "string"
+            },
+            {
+              "id": "7c74fa99-c283-4624-b3fd-12eb9166dcd0",
+              "name": "country",
+              "value": "={{ $json.results[0].location.country }}",
+              "type": "string"
+            },
+            {
+              "id": "d61a0bf7-600f-4aef-98d4-355048d26a46",
+              "name": "age",
+              "value": "={{ $json.results[0].dob.age }}",
+              "type": "string"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.5,
+      "position": [
+        896,
+        16
+      ],
+      "id": "29b0d344-bd3f-4982-9849-bc237b56e00e",
+      "name": "Edit Fields1"
+    },
+    {
+      "parameters": {
+        "url": "https://icanhazdadjoke.com/",
+        "options": {
+          "response": {
+            "response": {
+              "responseFormat": "json"
+            }
+          }
+        }
+      },
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.5,
+      "position": [
+        1120,
+        16
+      ],
+      "id": "a749ae5f-5551-4d2f-981d-8893105d1346",
+      "name": "HTTP Request2"
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "4c4a85bf-5ae5-4e6c-ae28-7446ca502118",
+              "name": "joke",
+              "value": "={{ $json.joke }}",
+              "type": "string"
+            },
+            {
+              "id": "012f1f16-8c6b-4a27-84ee-b42d406523c5",
+              "name": "joke_id",
+              "value": "={{ $json.id }}",
+              "type": "string"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.5,
+      "position": [
+        1344,
+        16
+      ],
+      "id": "a5e2dbb0-1ab6-41d3-a49e-1373f46084e3",
+      "name": "Edit Fields2"
+    }
+  ],
+  "pinData": {},
+  "connections": {
+    "When clicking ‘Execute workflow’": {
+      "main": [
+        [
+          {
+            "node": "HTTP Request",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "HTTP Request": {
+      "main": [
+        [
+          {
+            "node": "Edit Fields",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Edit Fields": {
+      "main": [
+        [
+          {
+            "node": "HTTP Request1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "HTTP Request1": {
+      "main": [
+        [
+          {
+            "node": "Edit Fields1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Edit Fields1": {
+      "main": [
+        [
+          {
+            "node": "HTTP Request2",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "HTTP Request2": {
+      "main": [
+        [
+          {
+            "node": "Edit Fields2",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "active": false,
+  "settings": {
+    "executionOrder": "v1",
+    "binaryMode": "separate"
+  },
+  "versionId": "c8fac5ea-0c39-451b-a1b6-59b067767c81",
+  "meta": {
+    "instanceId": "74ee99bc740c6dac711ced63f616b978808d56ad1bdf9d964ab20472df081c38"
+  },
+  "nodeGroups": [],
+  "id": "iuHhH88CWKqbdYlv",
+  "tags": []
+}
